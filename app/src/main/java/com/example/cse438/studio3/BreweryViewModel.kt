@@ -9,8 +9,16 @@ import com.example.cse438_rest_studio.data.Brewery
 
 class BreweryViewModel(application: Application): AndroidViewModel(application) {
 
-    //TODO #8: Create a livedata object for tracking breweries
+    //Done #8: Create a livedata object for tracking breweries
+    public var breweryList: MutableLiveData<List<Brewery>> = MutableLiveData()
 
-    //TODO #9: Write functions to access the two brewery API calls from the repository
+    //Done #9: Write functions to access the two brewery API calls from the repository
+    fun getBreweriesByCity(city : String){
+        BreweryRepository().getBreweriesByCity(breweryList, city)
+    }
+
+    fun getBreweriesByWord(term : String){
+        BreweryRepository().getBreweriesByTerm(breweryList, term)
+    }
 
 }

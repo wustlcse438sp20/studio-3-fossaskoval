@@ -9,8 +9,41 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class BreweryRepository {
+    val service = ApiClient.makeRetrofitService()
 
-    //TODO #6: Create a function that launches a coroutine for searching by city
+    //Done #6: Create a function that launches a coroutine for searching by city
+    fun getBreweriesByCity(responseBody : MutableLiveData<List<Brewery>>, city : String){
+        CoroutineScope(Dispatchers.IO).launch{
+            val response = service.getBreweriesByCity(city)
 
-    //TODO #7: Create a function that launches a coroutine for searching by a generic term
+            withContext(Dispatchers.Main){
+                try{
+                    if(response.isSuccessful){
+                        responseBody.value = response.body()
+                    }
+                } catch(e: HttpException){
+                    println("Http exception")
+                }
+            }
+
+        }
+    }
+
+    //Done #7: Create a function that launches a coroutine for searching by a generic term
+    fun getBreweriesByTerm(responseBody : MutableLiveData<List<Brewery>>, term : String){
+        CoroutineScope(Dispatchers.IO).launch{
+            val response = service.getBreweriesByTerm(term)
+
+            withContext(Dispatchers.Main){
+                try{
+                    if(response.isSuccessful){
+                        responseBody.value = response.body()
+                    }
+                } catch(e: HttpException){
+                    println("Http exception")
+                }
+            }
+
+        }
+    }
 }
